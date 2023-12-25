@@ -11,6 +11,9 @@ dependencies:
   '@unsass/breakpoint':
     specifier: ^2.4.0
     version: 2.4.0
+  pkce-gen:
+    specifier: ^1.1.0
+    version: 1.1.0
 
 devDependencies:
   '@playwright/test':
@@ -2668,6 +2671,10 @@ packages:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
     dev: true
+
+  /pkce-gen@1.1.0:
+    resolution: {integrity: sha512-pCXX7hcHBW4Cqvu8bSN/5+NLDNOg61VqiK9/1JSfppUHyTPuaNmZo8T8tydj0/AVlaDQpAB9+6iwCOT6yI7xsQ==}
+    dev: false
 
   /pkg-types@1.0.3:
     resolution: {integrity: sha512-nN7pYi0AQqJnoLPC9eHFQ8AcyaixBUOwvqc5TDnIKCMEE6I0y8P7OKA7fPexsXGCGxQDl/cmrLAp26LhcwxZ4A==}
