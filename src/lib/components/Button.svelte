@@ -1,5 +1,27 @@
 <script lang="ts">
-  export let element: "button" | "a";
+  import type {
+    HTMLAnchorAttributes,
+    HTMLButtonAttributes,
+  } from "svelte/elements";
+
+  // Generics are types that can be specified at runtime based on the user input
+  // In this case, we are defining a generic type that can be either "button" or "a"
+  type Element = $$Generic<"button" | "a">;
+
+  interface ButtonComponentElements {
+    button: HTMLButtonAttributes;
+    a: HTMLAnchorAttributes;
+  }
+
+  // define props and inherit props from other stuff
+  // extend new interface that we created called ButtonComponentElements
+  type $$Props = ButtonComponentElements[Element] & {
+    element: Element;
+    variant?: "solid" | "outline" | "danger";
+    className?: string;
+  };
+
+  export let element: Element;
   export let variant: "solid" | "outline" | "danger" = "solid";
   export let className: string = ""; // add custom class names to our button
 </script>
