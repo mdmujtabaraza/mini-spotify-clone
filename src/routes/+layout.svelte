@@ -2,8 +2,6 @@
   import "../app.scss";
   import "../app.pcss";
   import type { LayoutData } from "./$types";
-  // import LogoutButton from "$components/LogoutButton.svelte";
-  import { LogoutButton } from "$components";
 
   export let data: LayoutData;
 
@@ -12,9 +10,23 @@
 
 <!-- {data.user?.display_name} -->
 
-{#if user}
-  <h1>Hello {user.display_name}</h1>
-  <LogoutButton />
-{/if}
+<div id="main">
+  <div id="content">
+    <main id="main-content">
+      <slot />
+    </main>
+  </div>
+</div>
 
-<slot />
+<style lang="scss">
+  #main {
+    #content {
+      main#main-content {
+        padding: 30px 15px 60px;
+        @include breakpoint.up("md") {
+          padding: 30px 30px 60px;
+        }
+      }
+    }
+  }
+</style>

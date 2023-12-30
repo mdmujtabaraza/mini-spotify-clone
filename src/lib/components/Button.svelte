@@ -30,6 +30,8 @@
   this={element}
   class="button button-{variant} {className}"
   on:click
+  role="button"
+  tabindex="0"
   {...$$restProps}
 >
   <slot />
