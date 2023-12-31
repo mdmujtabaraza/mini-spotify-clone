@@ -2,6 +2,7 @@
   import "../app.scss";
   import "../app.pcss";
   import type { LayoutData } from "./$types";
+  import { Navigation } from "$components";
 
   export let data: LayoutData;
 
@@ -11,6 +12,11 @@
 <!-- {data.user?.display_name} -->
 
 <div id="main">
+  {#if user}
+    <div id="sidebar">
+      <Navigation desktop={true} />
+    </div>
+  {/if}
   <div id="content">
     <main id="main-content">
       <slot />
@@ -20,7 +26,9 @@
 
 <style lang="scss">
   #main {
+    display: flex;
     #content {
+      flex: 1;
       main#main-content {
         padding: 30px 15px 60px;
         @include breakpoint.up("md") {
