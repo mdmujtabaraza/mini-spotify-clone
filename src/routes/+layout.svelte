@@ -2,7 +2,7 @@
   import "../app.scss";
   import "../app.pcss";
   import type { LayoutData } from "./$types";
-  import { Navigation } from "$components";
+  import { Header, Navigation } from "$components";
 
   let topbar: HTMLElement;
   let scrollY: number;
@@ -37,7 +37,7 @@
         style:background-color="var(--header-color)"
         style:opacity={headerOpacity}
       />
-      Topbar
+      <Header />
     </div>
     <main id="main-content" class:logged-in={user}>
       <slot />
