@@ -19,6 +19,29 @@
     openMenuButton.focus();
   };
 
+  const moveFocusToBottom = (e: KeyboardEvent) => {
+    if (desktop) return;
+    if (e.key === "Tab" && e.shiftKey) {
+      e.preventDefault();
+      lastFocusableElement.focus();
+    }
+  };
+
+  const moveFocusToTop = (e: KeyboardEvent) => {
+    if (desktop) return;
+    if (e.key === "Tab" && !e.shiftKey) {
+      e.preventDefault();
+      closeMenuButton.focus();
+    }
+  };
+
+  const handleEscape = (e: KeyboardEvent) => {
+    if (desktop) return;
+    if (e.key === "Escape") {
+      closeMenu();
+    }
+  };
+
   beforeNavigate(() => {
     isMobileMenuOpen = false;
   });
@@ -28,6 +51,7 @@
 
   let openMenuButton: HTMLButtonElement;
   let closeMenuButton: HTMLButtonElement;
+  let lastFocusableElement: HTMLAnchorElement;
 
   const menuItems: { path: string; label: string; icon: string }[] = [
     {
@@ -64,6 +88,7 @@
       class="overlay"
       on:click={closeMenu}
       transition:fade={{ duration: 200 }}
+      on:keyup={handleEscape}
     />
   {/if}
   <nav aria-label="Main">
@@ -78,9 +103,14 @@
       class="nav-content-inner"
       class:is-hidden={!isOpen}
       style:visibility={isOpen ? "visible" : "hidden"}
+      on:keyup={handleEscape}
     >
       {#if !desktop}
-        <button bind:this={closeMenuButton} on:click={closeMenu}>Close</button>
+        <button
+          bind:this={closeMenuButton}
+          on:click={closeMenu}
+          on:keydown={moveFocusToBottom}>Close</button
+        >
       {/if}
       <img src={logo} class="logo" alt="Spotify" />
       <!-- <div class="menu-items">
@@ -92,15 +122,25 @@
         {/each}
       </div> -->
       <ul>
-        {#each menuItems as item}
+        {#each menuItems as item, index}
+          {@const iconProps = {
+            style: "color: var(--text-color); font-size: 26px;",
+          }}
           <li class:active={item.path === $page.url.pathname}>
-            <a href={item.path}
-              ><Icon
-                icon={item.icon}
-                style="color: var(--text-color); font-size: 26px;"
-              />
-              {item.label}</a
-            >
+            {#if menuItems.length === index + 1}
+              <a
+                href={item.path}
+                bind:this={lastFocusableElement}
+                on:keydown={moveFocusToTop}
+                ><Icon icon={item.icon} {...iconProps} />
+                {item.label}</a
+              >
+            {:else}
+              <a href={item.path}
+                ><Icon icon={item.icon} {...iconProps} />
+                {item.label}</a
+              >
+            {/if}
           </li>
         {/each}
       </ul>
