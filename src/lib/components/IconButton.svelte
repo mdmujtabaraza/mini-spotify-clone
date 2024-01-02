@@ -12,9 +12,20 @@
   import Icon from "@iconify/svelte";
   export let icon: string;
   export let label: string;
+
+  let button: HTMLButtonElement;
+  export function getButton() {
+    return button;
+  }
 </script>
 
-<button on:click on:mouseover on:focus on:keydown {...$$restProps}
+<button
+  bind:this={button}
+  on:click
+  on:mouseover
+  on:focus
+  on:keydown
+  {...$$restProps}
   ><Icon {icon} style="color: var(--text-color);" />
   <span class="visually-hidden">{label}</span>
 </button>

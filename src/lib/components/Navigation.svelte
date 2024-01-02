@@ -12,12 +12,12 @@
   const openMenu = async () => {
     isMobileMenuOpen = true;
     await tick();
-    closeMenuButton.focus();
+    closeMenuButton.getButton().focus();
   };
   const closeMenu = async () => {
     isMobileMenuOpen = false;
     await tick();
-    openMenuButton.focus();
+    openMenuButton.getButton().focus();
   };
 
   const moveFocusToBottom = (e: KeyboardEvent) => {
@@ -32,7 +32,7 @@
     if (desktop) return;
     if (e.key === "Tab" && !e.shiftKey) {
       e.preventDefault();
-      closeMenuButton.focus();
+      closeMenuButton.getButton().focus();
     }
   };
 
@@ -50,8 +50,8 @@
   let isMobileMenuOpen = false;
   $: isOpen = desktop || isMobileMenuOpen;
 
-  let openMenuButton: HTMLButtonElement;
-  let closeMenuButton: HTMLButtonElement;
+  let openMenuButton: IconButton;
+  let closeMenuButton: IconButton;
   let lastFocusableElement: HTMLAnchorElement;
 
   const menuItems: { path: string; label: string; icon: string }[] = [
@@ -95,12 +95,14 @@
   {/if}
   <nav aria-label="Main">
     {#if !desktop}
-      <IconButton icon="lucide:menu" label="Open Menu" />
-      <button
+      <IconButton
+        icon="lucide:menu"
+        label="Open Menu"
         bind:this={openMenuButton}
         on:click={openMenu}
-        aria-expanded={isOpen}>Open</button
-      >
+        aria-expanded={isOpen}
+        class="menu-button"
+      />
     {/if}
     <div
       class="nav-content-inner"
@@ -110,11 +112,14 @@
       aria-hidden="true"
     >
       {#if !desktop}
-        <button
+        <IconButton
+          icon="lucide:x"
+          label="Close Menu"
           bind:this={closeMenuButton}
           on:click={closeMenu}
-          on:keydown={moveFocusToBottom}>Close</button
-        >
+          on:keydown={moveFocusToBottom}
+          class="close-menu-button"
+        />
       {/if}
       <img src={logo} class="logo" alt="Spotify" />
       <!-- <div class="menu-items">
@@ -239,6 +244,16 @@
       @include breakpoint.down("md") {
         display: block;
       }
+    }
+    :global(.menu-button) {
+      @include breakpoint.up("md") {
+        display: none;
+      }
+    }
+    :global(.close-menu-button) {
+      position: absolute;
+      right: 20px;
+      top: 20px;
     }
   }
 </style>
