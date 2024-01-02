@@ -1,6 +1,7 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
   // import { type ComponentType } from "svelte";
+  import { IconButton } from "$components";
   import logo from "$assets/Spotify_Logo_RGB_White.png";
   import { page } from "$app/stores";
   import { fade } from "svelte/transition";
@@ -89,10 +90,12 @@
       on:click={closeMenu}
       transition:fade={{ duration: 200 }}
       on:keyup={handleEscape}
+      aria-hidden="true"
     />
   {/if}
   <nav aria-label="Main">
     {#if !desktop}
+      <IconButton icon="lucide:menu" label="Open Menu" />
       <button
         bind:this={openMenuButton}
         on:click={openMenu}
@@ -104,6 +107,7 @@
       class:is-hidden={!isOpen}
       style:visibility={isOpen ? "visible" : "hidden"}
       on:keyup={handleEscape}
+      aria-hidden="true"
     >
       {#if !desktop}
         <button
